@@ -1,5 +1,6 @@
 package com.pskapps.dialonce;
 
+//all required import files
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -45,6 +46,7 @@ import android.widget.Toast;
 
 public class DataViewer extends Activity implements OnItemClickListener {
 	
+//a static class to save cursor,table values etc which can be used any function in the program.Using this class functions talk to each other ( i mean sharing data)
 	static class indexInfo
     {
     	public static int index = 10;
@@ -56,6 +58,7 @@ public class DataViewer extends Activity implements OnItemClickListener {
     	public static ArrayList<String> tableheadernames;
     }
 	
+// all global variables
 	DatabaseManager dbm;
 	TableLayout tableLayout;
 	TableRow.LayoutParams tableRowParams;
@@ -69,11 +72,13 @@ public class DataViewer extends Activity implements OnItemClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		
+		//the main linear layout to which all tables spinners etc will be added.In this activity every element is created dynamically  to avoid using xml file
 		tempfirst = new LinearLayout(DataViewer.this);
 		tempfirst.setOrientation(LinearLayout.VERTICAL);
 		tempfirst.setBackgroundColor(Color.WHITE);
+
 		setContentView(tempfirst);
+               //the first row of layout which has a text view and spinner
 		LinearLayout firstrow = new LinearLayout(DataViewer.this);
 		LinearLayout.LayoutParams firstrowlp = new LinearLayout.LayoutParams(0, 100);
 		firstrowlp.weight = 1;
@@ -87,14 +92,20 @@ public class DataViewer extends Activity implements OnItemClickListener {
 		firstrow.addView(select_table);
 		tempfirst.addView(firstrow);
 		ArrayList<Cursor> alc ;
+               
+                //the horizantal scroll view for table if the table content doesnot fit into screen
 		 hsv = new HorizontalScrollView(DataViewer.this);
 		 
-		
+	//the main table layout where the content of the sql tables will be displayed when user selects a table	
     	tableLayout = new TableLayout(DataViewer.this);
     	tableLayout.setHorizontalScrollBarEnabled(true);
     	
     	hsv.addView(tableLayout);
+
+		//the database manager object using which we speak to sqllite database of the app
 		dbm = new DatabaseManager(getApplicationContext());
+
+		//the second row of the layout which shows number of reocrds in the table selected by user
 		LinearLayout secondrow = new LinearLayout(DataViewer.this);
 		LinearLayout.LayoutParams secondrowlp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 		secondrowlp.weight = 1;
@@ -107,10 +118,11 @@ public class DataViewer extends Activity implements OnItemClickListener {
 		secondrow.addView(tv);
 		tempfirst.addView(secondrow);
 		
+                // the spinner which gives user a option to add new row , drop or delete table
 		final Spinner spinnertable =new Spinner(DataViewer.this);
 		tempfirst.addView(spinnertable);
 		tempfirst.addView(hsv);
-		
+		//the third layout which has buttons for the pagination of content from database
 		LinearLayout thirdrow = new LinearLayout(DataViewer.this);
 		previous = new Button(DataViewer.this);
 		previous.setText("Previous");
@@ -121,14 +133,19 @@ public class DataViewer extends Activity implements OnItemClickListener {
 		thirdrow.addView(previous);
 		thirdrow.addView(next);
 		tempfirst.addView(thirdrow);
+
+		//the text view at the bottom of the screen which displays error or success messages after a query is executed
 		tvmessage =new TextView(DataViewer.this);
 		
 		tvmessage.setText("Error Messages will be displayed here");
 		String Query = "SELECT name _id FROM sqlite_master WHERE type ='table'";
 		tempfirst.addView(tvmessage);
+
+	//layout parameters for each row in the table
        tableRowParams = new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
        tableRowParams.setMargins(0, 0, 2, 0);
 	
+	// a query which returns a cursor with the list of tables in the database.We use this cursor to populate spinner in the first row
 		alc = dbm.getData(Query);
 		final Cursor c=alc.get(0);
 		Cursor Message =alc.get(1);
@@ -164,12 +181,13 @@ public class DataViewer extends Activity implements OnItemClickListener {
 	            public void onItemSelected(AdapterView<?> parent,
 	                    View view, int pos, long id) {
 	            	c.moveToPosition(pos);
-	            	
+	            	//displaying the content of the table which is selected in the select_table spinner
 	            	Log.d("selected table name is",""+c.getString(0));
 	            	indexInfo.table_name=c.getString(0);
 	            	tvmessage.setText("Error Messages will be displayed here");
 	               
-	            	 tableLayout.removeAllViews();
+	            	 //removes any data if present in the table layout
+                       tableLayout.removeAllViews();
 	            	ArrayList<String> spinnertablevalues = new ArrayList<String>();
 	            	spinnertablevalues.add("Click here to change this table");
 	                spinnertablevalues.add("Add row");
@@ -178,7 +196,7 @@ public class DataViewer extends Activity implements OnItemClickListener {
 	                ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, spinnertablevalues);
 	                spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
 	               
-
+			// a array adapter which add values to the spinner which helps in user making changes to the table
 	                ArrayAdapter<String> adapter = new ArrayAdapter<String>(DataViewer.this,
 	                		android.R.layout.simple_spinner_item, spinnertablevalues) {
 
@@ -203,14 +221,16 @@ public class DataViewer extends Activity implements OnItemClickListener {
 
 	                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);                                 
 	                spinnertable.setAdapter(adapter);
-	                //spinnertable.setTextColor(Color.parseColor("#000000"));
 	            	String Query2 ="select * from "+c.getString(0);
 	            	Log.d("",""+Query2);
 	            	
+	            	//getting contents of the table which user selected from the select_table spinner
 	            	ArrayList<Cursor> alc2=dbm.getData(Query2);
 	            	final Cursor c2=alc2.get(0);
+	            	//saving cursor to the static indexinfo class which can be resued by the other functions
 	            	indexInfo.maincursor=c2;
 	            	
+	            	// if the cursor returened form tha database is not null we display the data in table layout
 	            	if(c2!=null)
 	            	{
 	            	int counts = c2.getCount();
@@ -223,15 +243,18 @@ public class DataViewer extends Activity implements OnItemClickListener {
 	            	
 	            	
 	            	
-	            	
+	            	//the spinnertable has the 3 items to drop , delete , add row to the table selected by the user
+	            	//here we handle the 3 operations.
 	            	spinnertable.setOnItemSelectedListener((new AdapterView.OnItemSelectedListener() {
 	            	    @Override
 	            	    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
 	            	     
 	                    	
 	                    	((TextView)parentView.getChildAt(0)).setTextColor(Color.rgb(0,0,0));
+	                    	//when user selects to drop the table the below code in if block will be executed
 	                    	if(spinnertable.getSelectedItem().toString().equals("Drop"))
 	                    	{
+	                    		// an alert dialog to confirm user selection
 	                    		runOnUiThread(new Runnable() {
 	                    			   @Override
 	                    			   public void run() {
@@ -242,6 +265,7 @@ public class DataViewer extends Activity implements OnItemClickListener {
 		                    							.setMessage("Pressing yes will remove the table from the database")
 		                    							.setPositiveButton("yes", 
 		                          							new DialogInterface.OnClickListener() {
+		                          							// when user confirms by clicking on yes we drop the table by executing drop table query 	
 		                  								public void onClick(DialogInterface dialog, int which) {
 		                  			                        
 									                    		String Query6 = "Drop table "+indexInfo.table_name;
@@ -256,6 +280,7 @@ public class DataViewer extends Activity implements OnItemClickListener {
 																	}
 																	else
 																	{
+																	//if there is any error we displayd the error message at the bottom of the screen	
 																	tvmessage.setBackgroundColor(Color.parseColor("#e74c3c"));
 																	tvmessage.setText("Error:"+tempc.getString(0));
 																	}
@@ -275,8 +300,9 @@ public class DataViewer extends Activity implements OnItemClickListener {
 			                   			});
 	                    		
 	                    	}
+	                    	//when user selects to drop the table the below code in if block will be executed
 	                    	if(spinnertable.getSelectedItem().toString().equals("Delete"))
-	                    	{
+	                    	{	// an alert dialog to confirm user selection
 	                    		runOnUiThread(new Runnable() {
 	                    			   @Override
 	                    			   public void run() {
@@ -287,6 +313,8 @@ public class DataViewer extends Activity implements OnItemClickListener {
 		                    							.setMessage("are you sure asshole ?")
 		                    							.setPositiveButton("yes", 
 		                          							new DialogInterface.OnClickListener() {
+		                          								
+		                          							// when user confirms by clicking on yes we drop the table by executing delete table query 
 		                  								public void onClick(DialogInterface dialog, int which) {
 		                  			                        
 																	                    		
@@ -324,8 +352,12 @@ public class DataViewer extends Activity implements OnItemClickListener {
 		                   			});
                     		
 	                    	}
+	                    	
+	                    	//when user selects to add row to the table the below code in if block will be executed
 	                    	if(spinnertable.getSelectedItem().toString().equals("Add row"))
 	                    	{
+	                    		//we create a layout which has textviews with column names of the table and edittexts where
+	                    		//user can enter value which will be inserted into the datbase.
 	                    		final LinkedList<TextView> addnewrownames = new LinkedList<TextView>();
 	                        	  final LinkedList<EditText> addnewrowvalues = new LinkedList<EditText>();
 	                        	  
@@ -384,6 +416,7 @@ public class DataViewer extends Activity implements OnItemClickListener {
 	                        	    }
 	                          	
 	                          	Log.d("Button Clicked", "");
+	                          	//the above form layout which we have created above will be displayed in an alert dialog
 	                          	runOnUiThread(new Runnable() {
 	                    			   @Override
 	                    			   public void run() {
@@ -397,6 +430,7 @@ public class DataViewer extends Activity implements OnItemClickListener {
 	                    							.setView(addnewlayout)
 	                    							.setPositiveButton("Add", 
 	                          							new DialogInterface.OnClickListener() {
+	                          							// after entering values if user clicks on add we take the values and run a ainsert query
 	                  								public void onClick(DialogInterface dialog, int which) {
 	                  			                        
 	                  									indexInfo.index = 10;
@@ -440,8 +474,8 @@ public class DataViewer extends Activity implements OnItemClickListener {
 	                  										
 	                  										
 	                  									}
-	                  									
-	                  									Log.d("Inset Query",Query4);
+	                  									//this is the insert query which has been generated
+	                  									Log.d("Insert Query",Query4);
 	                  									ArrayList<Cursor> altc=dbm.getData(Query4);
 	                  									Cursor tempc=altc.get(1);
 	                  									tempc.moveToLast();
@@ -479,6 +513,7 @@ public class DataViewer extends Activity implements OnItemClickListener {
 	                    public void onNothingSelected(AdapterView<?> arg0) { }
 	                }));
 	            	
+	            	//display the first row of the table with column names of the table selected by the user
 	                TableRow tableheader = new TableRow(getApplicationContext());
 	                
 	                tableheader.setBackgroundColor(Color.BLACK);
@@ -502,10 +537,13 @@ public class DataViewer extends Activity implements OnItemClickListener {
 	                tableLayout.addView(tableheader);
 	                c2.moveToFirst();
 	               
+	               //after displaying columnnames in the first row  we display data in the remaining columns
+	               //the below paginatetbale function will display the first 10 tuples of the tables
+	               //the remaning tuples can be viewed by clicking on the next button
 	                paginatetable(c2.getCount());
 	            	}
 	            	else{
-	            		
+	            	//if the cursor returned from the database is empty we show that table is empty 	
 	            		tableLayout.removeAllViews();
 	            		TableRow tableheader2 = new TableRow(getApplicationContext());
 	            		tableheader2.setBackgroundColor(Color.BLACK);
@@ -543,17 +581,20 @@ public class DataViewer extends Activity implements OnItemClickListener {
 		 
 	
 	}
-	
+	//displays alert dialog from which use can update or delete a row 
 	public void updateDeletePopup(int row)
 	{
 		String text="";
 		
 		Cursor c2=indexInfo.maincursor;
+	// a spinner which gives options to update or delete the row which user has selected
   	  ArrayList<String> spinnerArray = new ArrayList<String>();
   	    spinnerArray.add("Click Here to Change this row");
   	    spinnerArray.add("Update this row");
   	    spinnerArray.add("Delete this row");
 
+	//create a layout with text values which has the column names and 
+	//edit texts which has the values of the row which user has selected
       	final ArrayList<String> value_string = indexInfo.value_string;
   	  final LinkedList<TextView> columnames = new LinkedList<TextView>();
   	  final LinkedList<EditText> columvalues = new LinkedList<EditText>();
@@ -578,6 +619,7 @@ public class DataViewer extends Activity implements OnItemClickListener {
   	  }
   	
   	int lastrid = 0;
+  	// all text views , edit texts are added to this relative layout lp
       final RelativeLayout lp = new RelativeLayout(DataViewer.this);
       lp.setBackgroundColor(Color.WHITE);
   	 RelativeLayout.LayoutParams lay = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -622,7 +664,8 @@ public class DataViewer extends Activity implements OnItemClickListener {
   	    LinearLayout.LayoutParams paramcrudtext = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
   	    
   	  paramcrudtext.setMargins(0, 20, 0, 0);
-  	    
+  	  
+  	  //spinner which displaye update , delete options
           final Spinner crud_dropdown = new Spinner(getApplicationContext());
           
           ArrayAdapter<String> crudadapter = new ArrayAdapter<String>(DataViewer.this,
@@ -658,8 +701,8 @@ public class DataViewer extends Activity implements OnItemClickListener {
     	  	rlcrudparam.addRule(RelativeLayout.BELOW,lastrid);
   	    
   	    lp.addView(lcrud, rlcrudparam);
-  	    
-          
+  	   
+        //after the layout has been created display it in a alert dialog  
   	runOnUiThread(new Runnable() {
 		   @Override
 		   public void run() {
@@ -672,11 +715,15 @@ public class DataViewer extends Activity implements OnItemClickListener {
 						.setCancelable(false)
 						.setPositiveButton("Ok", 
   							new DialogInterface.OnClickListener() {
+  							
+  							//this code will be executed when user changes values of edit text or spinner and clicks on ok button	
 							public void onClick(DialogInterface dialog, int which) {
 								
 								//get spinner value
 								String spinner_value = crud_dropdown.getSelectedItem().toString();
-
+								
+								//it he spinner value is update this row get the values from 
+								//edit text fields generate a update query and execute it
 								if(spinner_value.equalsIgnoreCase("Update this row"))
 								{
 									indexInfo.index = 10;
@@ -753,6 +800,8 @@ public class DataViewer extends Activity implements OnItemClickListener {
 								
 								
 								}
+								//it he spinner value is delete this row get the values from 
+								//edit text fields generate a delete query and execute it
 								
 								if(spinner_value.equalsIgnoreCase("Delete this row"))
 								{
@@ -829,7 +878,7 @@ public class DataViewer extends Activity implements OnItemClickListener {
 		
 	}
 	
-	
+	//the function which displays tuples from database in a table layout
 	public void paginatetable(final int number)
 		{
 		
@@ -837,11 +886,10 @@ public class DataViewer extends Activity implements OnItemClickListener {
 		 final Cursor c3 = indexInfo.maincursor;
 		 indexInfo.numberofpages=(c3.getCount()/10)+1;
 		 indexInfo.currentpage=1;
-		 final GradientDrawable gd = new GradientDrawable();
-	        //gd.setCornerRadius(5);
-	        gd.setStroke(1, 0xFF000000);
 		 c3.moveToFirst();
 		 int currentrow=0;
+		 
+		 //disaply the first 10 tuples of the table selected by user
 			 do
 			{
 				 
@@ -873,6 +921,8 @@ public class DataViewer extends Activity implements OnItemClickListener {
 			
              tableRow.setVisibility(View.VISIBLE);
              currentrow=currentrow+1;
+             //we create listener for each table row when clicked a alert dialog will be displayed 
+             //from where user can update or delete the row 
              tableRow.setOnClickListener(new OnClickListener(){
                  public void onClick(View v) {
                	  
@@ -887,6 +937,7 @@ public class DataViewer extends Activity implements OnItemClickListener {
                	  
                	  }
                	  indexInfo.value_string=value_string;
+               	  //the below function will display the alert dialog
                	  updateDeletePopup(0);
                  }
              });
@@ -897,6 +948,8 @@ public class DataViewer extends Activity implements OnItemClickListener {
 		 
 			 indexInfo.index=currentrow;
 		 
+		 
+		 // when user clicks on the previous button update the table with the previous 10 tuples from the database
 			previous.setOnClickListener(new View.OnClickListener() 
 		    {
 		        @Override
@@ -905,7 +958,7 @@ public class DataViewer extends Activity implements OnItemClickListener {
 		        	int tobestartindex=(indexInfo.currentpage-2)*10;
 		        	int startindex = (indexInfo.currentpage-1)*10;
 		        	int endindex=indexInfo.index;
-		        	
+		        	//if the tbale layout has the first 10 tuples then toast that this is the first page
 		            if(indexInfo.currentpage==1)
 		            {
 		            	Toast.makeText(getApplicationContext(), "This is the first page", Toast.LENGTH_LONG).show();
@@ -959,6 +1012,7 @@ public class DataViewer extends Activity implements OnItemClickListener {
 		        } 
 		    });
 		 
+		 // when user clicks on the next button update the table with the next 10 tuples from the database
 		 next.setOnClickListener(new View.OnClickListener() 
 		    {
 		        @Override
@@ -966,7 +1020,7 @@ public class DataViewer extends Activity implements OnItemClickListener {
 		        {
 		        	int startindex = indexInfo.currentpage*10;
 		        	int endindex = startindex+10;
-		        	
+		        //if there are no tuples to be shown toast that this the last page	
 		            if(indexInfo.currentpage>=indexInfo.numberofpages)
 		            {
 		            	Toast.makeText(getApplicationContext(), "This is the last page", Toast.LENGTH_LONG).show();
