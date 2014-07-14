@@ -1,4 +1,4 @@
-package com.pskapps.dialonce;
+//add your package name here example: package com.example.dbm;
 
 //all required import files
 import java.util.ArrayList;
@@ -50,8 +50,9 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
 
 // all global variables
 	
-	//Change the below class name with your custom sqlitehelper class.donot change the variable name dbm
-	DatabaseManager dbm;
+	//int below line Change the text 'yourCustomSqlHelper' with your custom sqlitehelper class name.Donot change the variable name dbm
+	yourCustomSqlHelper dbm;
+	
 	TableLayout tableLayout;
 	TableRow.LayoutParams tableRowParams;
 	HorizontalScrollView hsv;
@@ -69,9 +70,9 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
 		super.onCreate(savedInstanceState);
 		
 
-		//Change the below DatabaseManager name with your custom sqlitehelper class
-		//the database manager object using which we speak to sqllite database of the app
-		dbm = new DatabaseManager(AndroidDatabaseManager.this);
+		//int below line Change the text 'yourCustomSqlHelper' with your custom sqlitehelper class name
+		dbm = new yourCustomSqlHelper(AndroidDatabaseManager.this);
+		
 		mainscrollview = new ScrollView(AndroidDatabaseManager.this);
 		
 		//the main linear layout to which all tables spinners etc will be added.In this activity every element is created dynamically  to avoid using xml file
