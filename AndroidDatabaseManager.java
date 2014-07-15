@@ -194,17 +194,10 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
 				customquerytext.setVisibility(View.VISIBLE);
 				submitQuery.setVisibility(View.VISIBLE);
 				select_table.setSelection(0);
-				
-			}
-		});
-		
-		//remove the custom query button when its clicked
-		customQuery.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-
 				customQuery.setVisibility(View.GONE);
 			}
 		});
+		
 		
 		//when user enter a custom query in text view and clicks on submit query button
 		//display results in tablelayout
