@@ -1,55 +1,81 @@
 DatabaseManager_For_Android
 ===========================
 
-Managing android app's sqllite database is tough while developing .You cant see the tables ,you dont know what is getting inserted into the tables,you cant update the data and see how your application responds to it .
-What if you had a database manager like oracle sqldevelopr , mysql work bench for your application database ? This library gives you that .
+Managing android app's SQLite database is tough while developing .You cannot view the tables ,you dont know what is getting inserted into the tables,you cant update the data and see how your application responds to it .
+
+What if you had a database manager like oracle sqldevelopr , mysql work bench for your applications SQLlite database ? This library gives you that .
 
 With this library you can manage the database of your android app from the app itself. 
-You can view ,insert ,delete ,update the tables of your apps sqllite database from your app .
 
-Then entire library is written into a single activity class so you just need to add a single java file to your app .
+You can view ,insert ,delete ,update the tables of your apps SQLite database from your app .
 
+Then entire library is written into a single activity class so you just need to add this activity to you android app.
 
-Just four simple steps :
+This is how it looks - watch this 1 minute video for demo : http://youtu.be/P5vpaGoBlBY?t=3m40s
 
-	for live demo watch this 1 minute youtube video :
+Setup :
+======
+
+Setup takes hardly 3 minutes Just follow the four simple steps below : 
+
+you can watch 3 mins demonstration video here : http://youtu.be/P5vpaGoBlBY where i setup this library for my app .
+
 	
 1) Clone or download this repository and add AndroidDatabaseManager.java file to your application .
 
-   at lines 54 and 73 change yourSqlliteopenhelper to the class name of your custom SQLiteOpenHelper class
+   at lines 54 and 73 change yourSqlliteopenhelper to the class name of your custom SQLiteOpenHelper class i.e, the          class which you are using to create tables , insert data to your app SQLlitedatabase.
 
-2) Open helperFunction.txt file copy the entire text and paste the function in you custom SQLiteOpenHelper class.
-   Using this functions the AndroidDatabaseManager activity get data from your database.
 
-3) add the following code to your android manifest .Enter the name of the package where AndroidDatabaseManager.java is located.
+2) Open helperFunction.txt file copy the entire text and paste the function in you custom SQLiteOpenHelper class .i.e, the    class which you are using to create tables , insert data to your app SQLlitedatabase.
 
-    <activity android:name="yourpackagename.AndroidDatabaseManager"
-            android:label="@string/app_name" />
+3) Add the following code to your android manifest .Enter the name of the package where AndroidDatabaseManager.java is located.
 
-4) some where in your app add a button or something to start the AndroidDatabaseManager activty .
-    you can add onclick listener as shown below to a textview element or a button some where in your app .
-    if you are using an action bar you can add extra item to launch this activity. or an extra button any where in your 	   layout.
-  
-    object.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
+    <activity android:name="yourpackagename.AndroidDatabaseManager"  />
 
-      Intent dbmanager = new Intent(getActivity(),AndroidDatabaseManager.class);
-			startActivity(dbmanager);
-         }
-		});
-		
-		
+4) Now you have to start the AndroidDatabaseManager activity . You can do this anyway you wish,Below 3 are the simple ways
+   to start the activity choose anyone as per your convenience.
+   
+       (i)  add onclick listener to a textview .You can use the textview which is already present in your layout or add a 	    textview elemtn to your xml.
+    	
+	   TextView tv =(TextView)findViewByID(R.id.yourtexviewid);
+	    	
+	   tv.setOnClickListener(new OnClickListener() {
+				public void onClick(View v) {
+	
+	      Intent dbmanager = new Intent(getActivity(),AndroidDatabaseManager.class);
+				startActivity(dbmanager);
+	         }
+			});
+	(ii) add onclick listener to a Button .You can use the button which is already present in your layout or  add a 			Button element to your xml.
+    	
+	   Button button =(Button)findViewByID(R.id.yourbuttonid);
+	    	
+	   button.setOnClickListener(new OnClickListener() {
+				public void onClick(View v) {
+	
+	      Intent dbmanager = new Intent(getActivity(),AndroidDatabaseManager.class);
+				startActivity(dbmanager);
+	         }
+			});
+	
+	(iii) If you are using an action bar add an item  to the action bar and start activity when action bar item is 			       clicked.
+	 
+Thats it . Now you can manage your application database directly from your app.
+
+When app development is done remove the activity and publish your app .
+
 With this library you can do all these :
-1) view all your tables data in tabluar format
-2) Insert rows to your tables
-3) update rows
-4) delete rows
-5) delete tables
-6) Drop tables
-7) Write your own custom queries and get the results .(Create statments , joins etc)
-8) change data in the tables and see how you application responds
 
-In a nut shell , You can manage your database easily which was tough  .
+	1) view all your tables data in tabluar format
+	2) Insert rows to your tables
+	3) update rows
+	4) delete rows
+	5) delete tables
+	6) Drop tables
+	7) Write your own custom queries and get the results .(Create statments , joins etc)
+	8) change data in the tables and see how you application responds
+
+In a nut shell , You can manage your app database easily . 
 
 
 
