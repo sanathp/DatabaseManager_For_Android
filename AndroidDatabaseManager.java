@@ -439,7 +439,7 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
 		                  								.setNegativeButton("No", 
 			                          							new DialogInterface.OnClickListener() {
 			                  								public void onClick(DialogInterface dialog, int which) {
-
+														spinnertable.setSelection(0);
 			                  								}
 			                  							})
 			                   							.create().show();
@@ -487,7 +487,7 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
 														.setNegativeButton("No", 
 						                          							new DialogInterface.OnClickListener() {
 						                  								public void onClick(DialogInterface dialog, int which) {
-
+																	spinnertable.setSelection(0);
 						                  								}
 						                  							})
 						                   							.create().show();
@@ -651,7 +651,7 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
 	                    							.setNegativeButton("close", 
 	                          							new DialogInterface.OnClickListener() {
 	                  								public void onClick(DialogInterface dialog, int which) {
-
+												spinnertable.setSelection(0);
 	                  								}
 	                  							})
 	                   							.create().show();
