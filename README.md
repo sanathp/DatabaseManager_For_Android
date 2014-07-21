@@ -24,9 +24,13 @@ you can watch 3 mins demonstration video here : http://youtu.be/P5vpaGoBlBY wher
 1) Clone or download this repository and add AndroidDatabaseManager.java file to your application .
 
    at lines 54 and 73 change yourSqlliteopenhelper to the class name of your custom SQLiteOpenHelper class i.e, the          class which you are using to create tables , insert data to your app SQLlitedatabase.
+   
+   After changing the name some errors will exist done worry they will be gone after the next step.
 
 
 2) Open helperFunction.txt file copy the entire text and paste the function in you custom SQLiteOpenHelper class .i.e, the    class which you are using to create tables , insert data to your app SQLlitedatabase.
+
+   If there is a compile error at MatrixCursor. add import android.database.MatrixCursor; statement at the start of your class file
 
 3) Add the following code to your android manifest .Enter the name of the package where AndroidDatabaseManager.java is located.
 
