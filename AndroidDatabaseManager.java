@@ -50,7 +50,8 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
 
 // all global variables
 	
-	//int below line Change the text 'yourCustomSqlHelper' with your custom sqlitehelper class name.Donot change the variable name dbm
+	//in the below line Change the text 'yourCustomSqlHelper' with your custom sqlitehelper class name.
+	//Do not change the variable name dbm
 	yourCustomSqlLiteHelperclass dbm;
 	TableLayout tableLayout;
 	TableRow.LayoutParams tableRowParams;
@@ -69,7 +70,7 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
 		super.onCreate(savedInstanceState);
 		
 
-		//int below line Change the text 'yourCustomSqlHelper' with your custom sqlitehelper class name
+		//in the below line Change the text 'yourCustomSqlHelper' with your custom sqlitehelper class name
 		dbm = new yourCustomSqlLiteHelperclass(AndroidDatabaseManager.this);
 		
 		mainscrollview = new ScrollView(AndroidDatabaseManager.this);
@@ -84,7 +85,7 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
 		//all required layouts are created dynamically and added to the main scrollview
 		setContentView(mainscrollview);
 		
-        //the first row of layout which has a text view and spinner
+                //the first row of layout which has a text view and spinner
 		final LinearLayout firstrow = new LinearLayout(AndroidDatabaseManager.this);
 		firstrow.setPadding(0,10,0,20);
 		LinearLayout.LayoutParams firstrowlp = new LinearLayout.LayoutParams(0, 150);
@@ -103,13 +104,13 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
 		
 		ArrayList<Cursor> alc ;
                
-         //the horizontal scroll view for table if the table content doesnot fit into screen
+         	 //the horizontal scroll view for table if the table content doesnot fit into screen
 		 hsv = new HorizontalScrollView(AndroidDatabaseManager.this);
 
 		 //the main table layout where the content of the sql tables will be displayed when user selects a table	
-    	tableLayout = new TableLayout(AndroidDatabaseManager.this);
-    	tableLayout.setHorizontalScrollBarEnabled(true);
-    	hsv.addView(tableLayout);
+    		 tableLayout = new TableLayout(AndroidDatabaseManager.this);
+    		 tableLayout.setHorizontalScrollBarEnabled(true);
+    		 hsv.addView(tableLayout);
 
 		//the second row of the layout which shows number of records in the table selected by user
 		final LinearLayout secondrow = new LinearLayout(AndroidDatabaseManager.this);
