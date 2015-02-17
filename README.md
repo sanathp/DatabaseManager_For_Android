@@ -1,9 +1,9 @@
 DatabaseManager_For_Android
 ===========================
 
-Managing Android apps' SQLite database is tough while developing. You cannot view the tables, you dont know what is getting inserted into the tables, you can't update the data and see how your application responds to it.
+Managing Android apps' SQLite databases is tough while developing. You cannot view the tables, you don't know what is getting inserted into the tables and you can't update the data and see how your application responds to it.
 
-What if you had a database manager like oracle sqldevelopr, mysql work bench for your applications SQLlite database? This library gives you that.
+What if you had a database manager like oracle sqldevelopr, mysql work bench for your application's SQLite database? This library gives you that.
 
 With this library you can manage the database of your android app from the app itself. 
 
@@ -13,7 +13,7 @@ Then entire library is written into a single Activity class so you just need to 
 
 This is how it looks - watch this 1 minute video for demo : http://youtu.be/P5vpaGoBlBY?t=3m40s
 
-Setup :
+Setup:
 ======
 
 Setup takes hardly 3 minutes. Just follow the four simple steps below: 
@@ -39,9 +39,9 @@ You can watch 3 mins demonstration video here : http://youtu.be/P5vpaGoBlBY wher
 4) Now you have to start the AndroidDatabaseManager activity . You can do this anyway you wish,Below 3 are the simple ways
    to start the activity choose anyone as per your convenience.
    
-       (i)  add onclick listener to a textview .You can use the textview which is already present in your layout or add a 	    textview elemtn to your xml.
+   (i)  add OnClickListener to a TextView. You can use the textview which is already present in your layout or add a TextView element to your xml.
     	
-	   TextView tv =(TextView)findViewByID(R.id.yourtexviewid);
+	   TextView tv =(TextView)findViewById(R.id.yourtextviewid);
 	    	
 	   tv.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
@@ -50,7 +50,8 @@ You can watch 3 mins demonstration video here : http://youtu.be/P5vpaGoBlBY wher
 				startActivity(dbmanager);
 	         }
 			});
-	(ii) add onclick listener to a Button .You can use the button which is already present in your layout or  add a 			Button element to your xml.
+			
+(ii) add OnClickListener to a Button. You can use the button which is already present in your layout or add a 			Button element to your xml.
     	
 	   Button button =(Button)findViewByID(R.id.yourbuttonid);
 	    	
@@ -62,7 +63,7 @@ You can watch 3 mins demonstration video here : http://youtu.be/P5vpaGoBlBY wher
 	         }
 			});
 	
-	(iii) If you are using an action bar add an item  to the action bar and start activity when action bar item is 			       clicked.
+(iii) If you are using an action bar add an item  to the action bar and start activity when action bar item is 			       clicked.
 	 
 That's it. Now you can manage your application database directly from your app.
 
@@ -70,16 +71,13 @@ When app development is done remove the activity and publish your app.
 
 With this library you can do all these :
 
-	1) view all your tables data in tabular format
+	1) View all your tables data in tabular format
 	2) Insert rows to your tables
 	3) Update rows
 	4) Delete rows
 	5) Delete tables
 	6) Drop tables
-	7) Write your own custom queries and get the results. (Create statements, joins, etc)
+	7) Write your own custom queries and view the results. (Create statements, joins, etc)
 	8) Change data in the tables and see how you application responds
 
-In a nut shell , You can manage your app database easily. 
-
-
-
+In a nut shell, you can manage your app database easily.
