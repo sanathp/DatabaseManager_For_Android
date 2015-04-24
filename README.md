@@ -34,7 +34,8 @@ You can watch 3 mins demonstration video here : http://youtu.be/P5vpaGoBlBY wher
 
 3) Add the following code to your android manifest .Enter the name of the package where AndroidDatabaseManager.java is located.
 
-    <activity android:name="yourpackagename.AndroidDatabaseManager" />
+    <activity android:name="yourpackagename.AndroidDatabaseManager" 
+    	      android:theme="@style/Theme.AppCompat.Light"/>
 
 4) Now you have to start the AndroidDatabaseManager activity . You can do this anyway you wish,Below 3 are the simple ways
    to start the activity choose anyone as per your convenience.
