@@ -1138,8 +1138,13 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
             	 cell.setBackgroundColor(Color.WHITE);
             	 cell.setLayoutParams(tableRowParams);
                final TextView columsView = new TextView(getApplicationContext());
-  
-               columsView.setText(""+c3.getString(j)); 
+  	       String column_data = "";
+  	       try{
+  		    column_data = c3.getString(j);
+  		}catch(Exception e){
+  			// Column data is not a string , do not display it	
+  		}
+               columsView.setText(column_data); 
                columsView.setTextColor(Color.parseColor("#000000"));
                columsView.setPadding(0, 0, 4, 3);
                cell.addView(columsView);
