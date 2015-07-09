@@ -224,11 +224,16 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
 				{	
 					
 					tvmessage.setBackgroundColor(Color.parseColor("#2ecc71"));
-					tvmessage.setText("Queru Executed successfully.Number of rows returned :"+c4.getCount());
-					if(c4.getCount()>0)
-					{
-					indexInfo.maincursor=c4;
-					refreshTable(1);
+					if(c4!=null){
+						tvmessage.setText("Queru Executed successfully.Number of rows returned :"+c4.getCount());
+						if(c4.getCount()>0)
+						{
+						indexInfo.maincursor=c4;
+						refreshTable(1);
+						}
+					}else{
+				 	  	tvmessage.setText("Queru Executed successfully");
+					  	refreshTable(1);		
 					}
 					
 				}
@@ -1133,30 +1138,13 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
             	 cell.setBackgroundColor(Color.WHITE);
             	 cell.setLayoutParams(tableRowParams);
                final TextView columsView = new TextView(getApplicationContext());
-
-  				switch (c3.getType())
-				{
-					case Cursor.FIELD_TYPE_BLOB:
-						columsView.setText(bytesToString(c3.getBlob()));
-						break;
-					case Cursor.FIELD_TYPE_INTEGER:
-						columsView.setText("" + c3.getInt(j));
-						break;
-					case Cursor.FIELD_TYPE_STRING:
-						columsView.setText("" + c3.getString(j));
-						break;
-					case Cursor.FIELD_TYPE_FLOAT:
-						columsView.setText("" + c3.getFloat(j));
-						break;
-					case Cursor.FIELD_TYPE_NULL:
-						columsView.setText("NULL");
-						break;
-					default:
-						columsView.setText("UNKNOWN DATA TYPE");
-						break;
-				}
-
-
+  	       String column_data = "";
+  	       try{
+  		    column_data = c3.getString(j);
+  		}catch(Exception e){
+  			// Column data is not a string , do not display it	
+  		}
+               columsView.setText(column_data); 
                columsView.setTextColor(Color.parseColor("#000000"));
                columsView.setPadding(0, 0, 4, 3);
                cell.addView(columsView);
@@ -1293,33 +1281,6 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
 		    });
 
 		 }
-
-  public static String bytesToString(byte[] bytes)
-	{
-		InputStream in = new InflaterInputStream(new ByteArrayInputStream(bytes));
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		try
-		{
-			byte[] buffer = new byte[IO_BUFFER_SIZE];
-			int len;
-			while ((len = in.read(buffer)) > 0)
-			{
-				baos.write(buffer, 0, len);
-			}
-			return new String(baos.toByteArray(), UTF_8);
-		}
-		catch (IOException e)
-		{
-			L.w(e);
-			return EMPTY;
-		}
-		finally
-		{
-			IOUtils.closeQuietly(in);
-			IOUtils.closeQuietly(baos);
-		}
-	}
-	
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
