@@ -224,16 +224,11 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
 				{	
 					
 					tvmessage.setBackgroundColor(Color.parseColor("#2ecc71"));
-					if(c4!=null){
-						tvmessage.setText("Queru Executed successfully.Number of rows returned :"+c4.getCount());
-						if(c4.getCount()>0)
-						{
-						indexInfo.maincursor=c4;
-						refreshTable(1);
-						}
-					}else{
-				 	  	tvmessage.setText("Queru Executed successfully");
-					  	refreshTable(1);		
+					tvmessage.setText("Queru Executed successfully.Number of rows returned :"+c4.getCount());
+					if(c4.getCount()>0)
+					{
+					indexInfo.maincursor=c4;
+					refreshTable(1);
 					}
 					
 				}
