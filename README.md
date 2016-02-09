@@ -25,7 +25,7 @@ You can watch 3 mins demonstration video here : http://youtu.be/P5vpaGoBlBY wher
 
    at lines 54 and 73 change yourSqlliteopenhelper to the class name of your custom SQLiteOpenHelper class i.e, the          class which you are using to create tables, insert data to your app SQLite database.
    
-   After changing the name some errors will exist done worry they will be gone after the next step.
+   After changing the name, some errors will exist! don't worry, they will be gone after the next step.
 
 
 2) Open helperFunction.txt file copy the entire text and paste the function in you custom SQLiteOpenHelper class .i.e, the class which you are using to create tables and insert data to your app's SQLite database.
