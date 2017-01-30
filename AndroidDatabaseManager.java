@@ -850,6 +850,7 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
 	    tv.setId(t);
 	    tv.setTextColor(Color.parseColor("#000000"));
         et.setBackgroundColor(Color.parseColor("#F2F2F2"));
+		et.setSingleLine(true);
         
         et.setTextColor(Color.parseColor("#000000"));
 	    et.setId(k);
@@ -861,6 +862,7 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
         lpp.weight = 1;
         tv.setLayoutParams(lpp);
         et.setLayoutParams(lpp);
+		et.setPadding(0, 0, 0, 0);
 	    ll.addView(tv);
 	    ll.addView(et);
 	    
